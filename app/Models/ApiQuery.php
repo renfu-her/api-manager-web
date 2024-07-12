@@ -10,4 +10,9 @@ class ApiQuery extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'content'];
+
+    public function docs()
+    {
+        return $this->hasMany(ApiDoc::class, 'query_id');
+    }
 }

@@ -13,10 +13,10 @@ class ApiCategory extends Model
 
     public function menu()
     {
-        return $this->belongsTo(ApiMenu::class);
+        return $this->belongsTo(ApiMenu::class, 'menu_id');
     }
 
-    public function apiDocs()
+    public function docs()
     {
         return $this->hasMany(ApiDoc::class, 'category_id');
     }

@@ -10,4 +10,9 @@ class ApiRequest extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'level', 'type', 'content', 'comment'];
+
+    public function docs()
+    {
+        return $this->hasMany(ApiDoc::class, 'request_id');
+    }
 }

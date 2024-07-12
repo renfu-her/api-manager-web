@@ -15,24 +15,33 @@ class ApiCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $apiCategory = ApiCategory::create($request->all());
+        $validatedData = $request->validate([
+            'menu_id' => 'required',
+            'name' => 'required',
+            'prefix_url' => 'required',
+            'status' => 'required|boolean',
+        ]);
+
+        $apiCategory = ApiCategory::create($validatedData);
         return response()->json($apiCategory, 201);
     }
 
-    public function show(ApiCategory $apiCategory)
+    public function show($id)
     {
-        return $apiCategory;
+        $apiCategory = ApiCategory::findOrFail($id);
+        return response()->json($apiCategory);
     }
 
-    public function update(Request $request, ApiCategory $apiCategory)
+    public function update(Request $request, $id)
     {
+        $apiCategory = ApiCategory::findOrFail($id);
         $apiCategory->update($request->all());
-        return response()->json($apiCategory, 200);
+        return response()->json($apiCategory);
     }
 
-    public function destroy(ApiCategory $apiCategory)
+    public function destroy($id)
     {
-        $apiCategory->delete();
+        ApiCategory::destroy($id);
         return response()->json(null, 204);
     }
 }

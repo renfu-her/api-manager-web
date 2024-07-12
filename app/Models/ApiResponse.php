@@ -10,4 +10,9 @@ class ApiResponse extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'level', 'type', 'is_required', 'content', 'comment'];
+
+    public function docs()
+    {
+        return $this->hasMany(ApiDoc::class, 'response_id');
+    }
 }
