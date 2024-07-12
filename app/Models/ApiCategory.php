@@ -1,25 +1,23 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-class CreateApiCategoriesTable extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ApiCategory extends Model
 {
-    public function up()
+    use HasFactory;
+
+    protected $fillable = ['menu_id', 'name', 'prefix_url', 'status'];
+
+    public function menu()
     {
-        Schema::create('api_categories', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('menu_id');
-            $table->string('name');
-            $table->string('prefix_url');
-            $table->integer('status')->default(1); // 0 or 1
-            $table->timestamps();
-        });
+        return $this->belongsTo(ApiMenu::class);
     }
 
-    public function down()
+    public function apiDocs()
     {
-        Schema::dropIfExists('api_categories');
+        return $this->hasMany(ApiDoc::class, 'category_id');
     }
 }

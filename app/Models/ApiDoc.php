@@ -1,32 +1,20 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-class CreateApiDocsTable extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ApiDoc extends Model
 {
-    public function up()
-    {
-        Schema::create('api_docs', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->string('name');
-            $table->string('url');
-            $table->string('methods');
-            $table->unsignedBigInteger('query_id')->nullable();
-            $table->json('query_json')->nullable();
-            $table->json('headers')->nullable();
-            $table->unsignedBigInteger('request_id')->nullable();
-            $table->json('request_json')->nullable();
-            $table->unsignedBigInteger('response_id')->nullable();
-            $table->json('response_json')->nullable();
-            $table->timestamps();
-        });
-    }
+    use HasFactory;
 
-    public function down()
+    protected $fillable = [
+        'category_id', 'name', 'url', 'methods', 'query_id', 'query_json', 'headers', 'request_id', 'request_json', 'response_id', 'response_json'
+    ];
+
+    public function category()
     {
-        Schema::dropIfExists('api_docs');
+        return $this->belongsTo(ApiCategory::class);
     }
 }

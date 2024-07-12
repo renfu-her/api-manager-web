@@ -1,26 +1,13 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-class CreateApiRequestsTable extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ApiRequest extends Model
 {
-    public function up()
-    {
-        Schema::create('api_requests', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('level')->default(0);
-            $table->string('type');
-            $table->string('content');
-            $table->string('comment')->nullable();
-            $table->timestamps();
-        });
-    }
+    use HasFactory;
 
-    public function down()
-    {
-        Schema::dropIfExists('api_requests');
-    }
+    protected $fillable = ['name', 'level', 'type', 'content', 'comment'];
 }
